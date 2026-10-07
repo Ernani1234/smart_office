@@ -1,0 +1,100 @@
+# Modo completo: Postgres (pgvector), Redis, Temporal + UI, API e worker
+# separados. Começa barato numa VPS e cresce depois (Temporal Cloud no lugar do
+# serviço "temporal", Supabase no lugar do "postgres").
+#
+#   cp .env.example .env      # ajuste LLM_PROVIDER/OPENAI_API_KEY/OFFICE_TOKEN
+#   docker compose up -d --build
+#   open http://localhost:4000      (Temporal UI: http://localhost:8233)
+#
+# Observação: no modo real a sandbox padrão é Docker. Dentro do container da
+# API/worker isso exige montar o socket do Docker (veja "worker" abaixo) — ou
+# use WORKER_RUNTIME=agents (sandbox hospedada pela OpenAI).
+
+name: pixel-office
+
+x-app-env: &app-env
+  DATABASE_URL: postgres://office:office@postgres:5432/office
+  REDIS_URL: redis://redis:6379
+  TEMPORAL_ADDRESS: temporal:7233
+  TEMPORAL_UI_URL: http://localhost:8233
+  DATA_DIR: /data
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: office
+      POSTGRES_PASSWORD: office
+      POSTGRES_DB: office
+    volumes:
+      - pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U office"]
+      interval: 5s
+      retries: 20
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  temporal:
+    # CLI oficial com SQLite persistente (dev server). Em produção: Temporal Cloud.
+    image: temporalio/temporal:latest
+    user: "0:0"
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--db-filename", "/temporal/temporal.db", "--ui-port", "8233"]
+    volumes:
+      - temporal:/temporal
+    ports:
+      - "127.0.0.1:7233:7233"
+      - "127.0.0.1:8233:8233"
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      <<: *app-env
+      EMBED_WORKER: "false"
+      PORT: "4000"
+    volumes:
+      - data:/data
+      - ./config:/app/config
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+    ports:
+      - "4000:4000"
+
+  worker:
+    build: .
+    command: ["pnpm", "--filter", "@office/worker", "start"]
+    env_file: .env
+    environment:
+      <<: *app-env
+    volumes:
+      - data:/data
+      - ./config:/app/config
+      # Necessário para SANDBOX=docker (containers irmãos, sem rede):
+      # - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+    deploy:
+      replicas: 1
+
+volumes:
+  pg:
+  temporal:
+  data:

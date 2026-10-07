@@ -1,0 +1,93 @@
+// Paleta do escritório: noite aconchegante com acentos neon. Tudo deriva daqui
+// para o mapa, os móveis e os personagens conversarem entre si.
+
+export const INK = '#1b1726';
+
+export const PALETTE = {
+  ink: INK,
+  void: '#0d0b14',
+  shadow: 'rgba(16,10,30,0.32)',
+  shadowSoft: 'rgba(16,10,30,0.18)',
+
+  // paredes (topo escuro + face creme com rodapé)
+  capDark: '#231d33',
+  cap: '#352c4c',
+  capLight: '#4a3f66',
+  capEdge: '#5b4f7d',
+  face: '#e9dcc4',
+  faceLight: '#f4ead6',
+  faceShade: '#d3c2a5',
+  faceDark: '#b6a284',
+  baseboard: '#6b5541',
+  baseboardDark: '#4a3a2c',
+
+  // pisos
+  woodA: '#a8714a',
+  woodB: '#94613d',
+  woodC: '#b98157',
+  woodLine: '#6f4529',
+  stoneA: '#bdb3a4',
+  stoneB: '#aea392',
+  stoneLine: '#958a79',
+  marbleA: '#e4dfd6',
+  marbleB: '#d6cfc3',
+  marbleVein: '#b9b0a2',
+  boardA: '#6e2438',
+  boardB: '#7f2c43',
+  boardC: '#5d1e2f',
+  gold: '#f2c14e',
+  goldDark: '#c48f2c',
+  copaA: '#efe8d8',
+  copaB: '#d6ccb4',
+  metalA: '#2c3242',
+  metalB: '#353c50',
+  metalC: '#242938',
+  metalLine: '#1c2030',
+
+  // carpetes por time
+  produto: ['#2f6f5a', '#367c66', '#295f4e'],
+  engenharia: ['#2d4f80', '#345b90', '#284672'],
+  qa: ['#55407f', '#5f4790', '#4a3770'],
+  growth: ['#8c5a2a', '#9b6630', '#7c4f24'],
+  diretoria: ['#3b3270', '#443a80', '#332b62'],
+
+  // móveis
+  deskTop: '#c98d5a',
+  deskTopLight: '#dba476',
+  deskFront: '#9b6a42',
+  deskDark: '#6d4a2d',
+  whiteTop: '#ecebe6',
+  whiteFront: '#cfcbc2',
+  whiteDark: '#a9a49a',
+  steel: '#8a93a8',
+  steelDark: '#5c6479',
+  steelLight: '#b4bccd',
+  screen: '#0f1b2d',
+  screenGlow: '#5eead4',
+  bezel: '#20242f',
+  chair: '#3b4057',
+  chairDark: '#2a2e40',
+  chairLight: '#50567a',
+  plantA: '#2f7d4a',
+  plantB: '#3f9a5b',
+  plantC: '#5bb870',
+  plantD: '#21593a',
+  pot: '#b8643c',
+  potDark: '#8b4a2b',
+  sofa: '#5566ab',
+  sofaDark: '#3f4e8c',
+  sofaLight: '#7182c4',
+  paper: '#f6f1e4',
+  red: '#e05555',
+  green: '#4ade80',
+  amber: '#fbbf24',
+  cyan: '#5eead4',
+  pink: '#f472b6',
+  violet: '#a78bfa',
+  sky: '#1b2a4e',
+  skyDeep: '#111a33',
+  skyDay: '#8fd3ff',
+  skyDayLight: '#c7ecff',
+} as const;
+
+export type TeamId = 'produto' | 'engenharia' | 'qa' | 'growth' | 'diretoria';

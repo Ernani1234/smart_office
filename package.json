@@ -1,0 +1,29 @@
+{
+  "name": "pixel-office",
+  "private": true,
+  "type": "module",
+  "description": "Empresa de agentes de IA com escritório em pixel art — Temporal + OpenAI + Phaser.",
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev --ui=stream",
+    "dev:server": "pnpm --filter @office/server dev",
+    "dev:web": "pnpm --filter @office/web dev",
+    "temporal": "pnpm --filter @office/temporal-dev dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "art": "pnpm --filter @office/pixel-art generate",
+    "eval": "pnpm --filter @office/engine eval",
+    "e2e": "node scripts/e2e-sim.mjs",
+    "format": "prettier --write \"apps/*/src/**/*.{ts,tsx,css}\" \"packages/*/src/**/*.ts\" \"packages/pixel-art/scripts/**/*.ts\" \"tools/**/*.mjs\" \"scripts/**/*.mjs\"",
+    "format:check": "prettier --check \"apps/*/src/**/*.{ts,tsx,css}\" \"packages/*/src/**/*.ts\""
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9",
+    "turbo": "^2.11.7",
+    "typescript": "~5.9.3"
+  }
+}

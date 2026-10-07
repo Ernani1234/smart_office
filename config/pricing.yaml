@@ -1,0 +1,69 @@
+# pricing.yaml — preços em USD por milhão de tokens.
+# Conferidos em 5 de outubro de 2026 (catálogo de modelos da OpenAI).
+# Trate como configuração: mudou o preço, muda aqui. O livro-caixa recusa
+# chamadas a modelos sem preço cadastrado.
+currency: USD
+checkedAt: "2026-10-05"
+
+# Acima do limiar, a requisição inteira passa para a tabela de contexto longo.
+longContext:
+  thresholdTokens: 272000
+  inputMultiplier: 2
+  outputMultiplier: 1.5
+
+# Flex dá o mesmo desconto do Batch, com respostas mais lentas.
+billingMultipliers:
+  standard: 1.0
+  flex: 0.5
+  batch: 0.5
+
+models:
+  gpt-6-astra:
+    tier: astra
+    label: GPT-6 Astra
+    input: 10.00
+    cachedInput: 1.00
+    cacheWrite: 12.50              # prefixo precisa ser lido 2× para compensar
+    output: 50.00
+    longContextAppliesToCached: true
+    contextWindow: 1050000
+  gpt-6.1-sol:
+    tier: sol
+    label: GPT-6.1 Sol
+    input: 2.00
+    cachedInput: 0.20
+    cacheWrite: 2.50
+    output: 10.00
+    contextWindow: 1050000
+  gpt-6-luna:
+    tier: luna
+    label: GPT-6 Luna
+    input: 0.10
+    cachedInput: 0.01
+    cacheWrite: 0.125
+    output: 0.50
+    contextWindow: 1050000
+  text-embedding-3-small:
+    tier: embedding
+    label: Embeddings
+    input: 0.02
+    output: 0
+
+# Preço por imagem — confira no catálogo antes de usar em produção.
+images:
+  gpt-image-2.5-flare: { perImage: 0.02 }
+  gpt-image-2.5-sunburst: { perImage: 0.12 }
+
+tools:
+  webSearchPer1k: 10.00            # mais os tokens do conteúdo
+  tavilyPerCall: 0.008
+  firecrawlPerPage: 0.001
+
+# Sandboxes hospedadas seguem a tarifa de containers.
+sandbox:
+  perGbPer20Min: 0.03
+  defaultGb: 4
+  sizesGb:
+    small: 1
+    medium: 4
+    large: 16

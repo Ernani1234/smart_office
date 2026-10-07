@@ -1,0 +1,240 @@
+# roles.yaml — quem é quem na empresa.
+#
+# Modelo é configuração, não código. Cada cargo tem modelo, esforço de
+# raciocínio, modo de cobrança e orçamento por tarefa. Edite aqui ou pela aba
+# "Equipe" da interface: a próxima chamada de cada agente já usa o valor novo,
+# sem deploy. Promoções individuais ficam em `overrides`.
+#
+# Regras de bolso do plano:
+#  - no máximo três níveis; para escalar, multiplique trabalhadores, nunca camadas;
+#  - o CEO é o recurso mais escasso: acionado por evento, lê só relatórios;
+#  - quem lê a internet não recebe ferramenta de escrita (validado no schema).
+version: 1
+
+company:
+  name: Pixel Corp
+  handbook: prompts/handbook.md
+  rules:
+    maxReviewRounds: 3            # idas e voltas de revisão antes de escalar
+    ciFailuresBeforePromotion: 2  # Luna → Sol depois de N falhas de CI
+    maxRespecs: 1                 # quantas vezes o líder pode reescrever a spec
+    ceoMaxContextTokens: 272000   # acima disso tudo vai para a tabela de contexto longo
+    approvalTimeoutHours: 72
+    budgetWarningPct: 0.8
+
+teams:
+  diretoria: { name: Diretoria, color: "#8b7cf6", icon: crown }
+  produto: { name: Produto, color: "#34d399", icon: compass }
+  engenharia: { name: Engenharia, color: "#38bdf8", icon: code }
+  qa: { name: QA/Segurança, color: "#c084fc", icon: shield }
+  growth: { name: Growth, color: "#fbbf24", icon: rocket }
+  staff: { name: Staff, color: "#94a3b8", icon: briefcase }
+
+roles:
+  # ------------------------------------------------------------- diretoria
+  ceo:
+    title: CEO
+    team: diretoria
+    level: executive
+    description: Decide por evento, nunca por timer. Lê relatórios condensados, nunca código.
+    model: gpt-6-astra
+    effort: high
+    pivotEffort: max              # só para pivôs e integração final
+    billing: standard
+    taskBudgetUsd: 2.0
+    names: [Helena]
+    prompt: prompts/ceo.md
+
+  # ------------------------------------------------------------- líderes
+  lead-produto:
+    title: Líder de Produto (PM)
+    team: produto
+    level: lead
+    model: gpt-6.1-sol
+    effort: medium
+    reviewEffort: high
+    billing: standard
+    taskBudgetUsd: 0.6
+    names: [Marina]
+    prompt: prompts/lead.md
+
+  lead-engenharia:
+    title: Tech Lead
+    team: engenharia
+    level: lead
+    model: gpt-6.1-sol
+    effort: medium
+    reviewEffort: high            # high em code review
+    billing: standard
+    taskBudgetUsd: 0.8
+    names: [Otávio]
+    prompt: prompts/lead.md
+
+  lead-qa:
+    title: QA Lead
+    team: qa
+    level: lead
+    model: gpt-6.1-sol
+    effort: medium
+    reviewEffort: high
+    billing: standard
+    taskBudgetUsd: 0.5
+    names: [Iara]
+    prompt: prompts/lead.md
+
+  lead-growth:
+    title: Growth Lead
+    team: growth
+    level: lead
+    model: gpt-6.1-sol
+    effort: medium
+    reviewEffort: medium
+    billing: standard
+    taskBudgetUsd: 0.5
+    names: [Rafa]
+    prompt: prompts/lead.md
+
+  # ------------------------------------------------------------- produto
+  pesquisa:
+    title: Pesquisador(a)
+    team: produto
+    level: worker
+    description: Lê a internet. Por isso não tem escrita nem chave de nada.
+    model: gpt-6-luna
+    effort: medium
+    billing: flex
+    taskBudgetUsd: 0.15
+    tools: [web]
+    names: [Sofia]
+    prompt: prompts/research.md
+
+  ux:
+    title: UX
+    team: produto
+    level: worker
+    model: gpt-6-luna
+    effort: medium
+    billing: standard
+    taskBudgetUsd: 0.15
+    tools: [workspace]
+    names: [Téo]
+    prompt: prompts/ux.md
+
+  designer:
+    title: Designer
+    team: produto
+    level: worker
+    kind: image
+    description: Rascunho no Flare, arte final no Sunburst.
+    model: gpt-image-2.5-flare
+    finalModel: gpt-image-2.5-sunburst
+    effort: none
+    billing: standard
+    taskBudgetUsd: 0.2
+    tools: [image, workspace]
+    names: [Flora]
+    prompt: prompts/designer.md
+
+  # ------------------------------------------------------------- engenharia
+  dev:
+    title: Dev
+    team: engenharia
+    level: worker
+    model: gpt-6-luna             # promovido a gpt-6.1-sol quando trava
+    effort: high
+    billing: standard
+    taskBudgetUsd: 0.4
+    instances: 2
+    names: [Ana, Bruno]
+    tools: [workspace, shell]
+    escalation:
+      model: gpt-6.1-sol
+      afterCiFailures: 2
+    prompt: prompts/dev.md
+
+  devops:
+    title: DevOps
+    team: engenharia
+    level: worker
+    model: gpt-6-luna
+    effort: high
+    billing: standard
+    taskBudgetUsd: 0.3
+    names: [Diego]
+    tools: [workspace, shell]
+    escalation:
+      model: gpt-6.1-sol
+      afterCiFailures: 2
+    prompt: prompts/dev.md
+
+  # ------------------------------------------------------------- qa / segurança
+  testador:
+    title: Testador(a)
+    team: qa
+    level: worker
+    description: Recebe a especificação e o build, nunca a conversa do dev.
+    model: gpt-6-luna
+    effort: medium
+    billing: standard
+    taskBudgetUsd: 0.25
+    instances: 2
+    names: [Caio, Lara]
+    tools: [workspace, shell]
+    escalation:
+      model: gpt-6.1-sol
+      afterCiFailures: 2
+    prompt: prompts/qa.md
+
+  # ------------------------------------------------------------- growth
+  copy:
+    title: Copywriter
+    team: growth
+    level: worker
+    model: gpt-6-luna
+    effort: low
+    billing: flex
+    taskBudgetUsd: 0.1
+    names: [Bia]
+    tools: [workspace]
+    prompt: prompts/copy.md
+
+  seo:
+    title: SEO
+    team: growth
+    level: worker
+    model: gpt-6-luna
+    effort: medium
+    billing: flex
+    taskBudgetUsd: 0.1
+    names: [Nico]
+    tools: [web]
+    prompt: prompts/seo.md
+
+  # ------------------------------------------------------------- staff
+  financeiro:
+    title: Financeiro
+    team: staff
+    level: staff
+    kind: code
+    description: Código conta o dinheiro; o Luna só redige o relatório. Só ele declara a meta batida.
+    model: gpt-6-luna
+    effort: none
+    billing: flex
+    taskBudgetUsd: 0.05
+    names: [Wagner]
+    prompt: prompts/finance.md
+
+  secretaria:
+    title: Secretaria
+    team: staff
+    level: staff
+    description: Balões do escritório e recados do Conselho.
+    model: gpt-6-luna
+    effort: none
+    billing: standard
+    taskBudgetUsd: 0.02
+    names: [Yara]
+    prompt: prompts/secretary.md
+
+# Promoções individuais, editáveis pela interface (botão "Promover").
+overrides: {}

@@ -1,0 +1,13 @@
+{
+  "id": "csv",
+  "title": "Parser de linha CSV",
+  "objective": "Criar src/csv.js exportando parseCsvLine(linha).",
+  "context": "Campos separados por vírgula; campos entre aspas podem conter vírgulas; aspas escapadas como \"\".",
+  "acceptanceCriteria": [
+    "Campos com aspas e vírgulas internas",
+    "Aspas escapadas"
+  ],
+  "hiddenTests": {
+    "test/hidden-csv.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { parseCsvLine } from '../src/csv.js';\n\ntest('oculto: aspas', () => {\n  assert.deepEqual(parseCsvLine('a,\"b,c\",\"d\"\"e\"'), ['a', 'b,c', 'd\"e']);\n});\n\ntest('oculto: vazios', () => {\n  assert.deepEqual(parseCsvLine('a,,c'), ['a', '', 'c']);\n  assert.deepEqual(parseCsvLine(''), ['']);\n});\n"
+  }
+}

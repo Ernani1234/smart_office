@@ -1,0 +1,14 @@
+{
+  "id": "duration",
+  "title": "Parser de duração",
+  "objective": "Criar src/duration.js exportando parseDuration(texto) que devolve segundos.",
+  "context": "Formato com unidades d, h, m, s combináveis (ex.: 1h30m). Entrada inválida lança Error.",
+  "acceptanceCriteria": [
+    "parseDuration('1h30m') === 5400",
+    "parseDuration('2d') === 172800",
+    "Entrada inválida lança erro"
+  ],
+  "hiddenTests": {
+    "test/hidden-duration.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { parseDuration } from '../src/duration.js';\n\ntest('oculto: combinações', () => {\n  assert.equal(parseDuration('1h30m'), 5400);\n  assert.equal(parseDuration('45s'), 45);\n  assert.equal(parseDuration('2d'), 172800);\n  assert.equal(parseDuration('1d2h3m4s'), 93784);\n});\n\ntest('oculto: inválidos', () => {\n  assert.throws(() => parseDuration(''));\n  assert.throws(() => parseDuration('10x'));\n});\n"
+  }
+}

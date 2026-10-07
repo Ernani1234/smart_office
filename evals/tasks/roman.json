@@ -1,0 +1,13 @@
+{
+  "id": "roman",
+  "title": "Números romanos",
+  "objective": "Criar src/roman.js exportando toRoman(n) para 1..3999.",
+  "context": "Notação subtrativa padrão (IV, IX, XL, XC, CD, CM). Fora do intervalo lança RangeError.",
+  "acceptanceCriteria": [
+    "toRoman(1994) === 'MCMXCIV'",
+    "toRoman(0) lança RangeError"
+  ],
+  "hiddenTests": {
+    "test/hidden-roman.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { toRoman } from '../src/roman.js';\n\ntest('oculto: conversões', () => {\n  assert.equal(toRoman(1994), 'MCMXCIV');\n  assert.equal(toRoman(3999), 'MMMCMXCIX');\n  assert.equal(toRoman(4), 'IV');\n});\n\ntest('oculto: limites', () => {\n  assert.throws(() => toRoman(0), RangeError);\n  assert.throws(() => toRoman(4000), RangeError);\n});\n"
+  }
+}

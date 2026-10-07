@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+.data
+.tools
+.turbo
+**/dist
+.env
+.env.local
+packages/pixel-art/preview
+evals/results

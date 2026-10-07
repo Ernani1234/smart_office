@@ -1,0 +1,43 @@
+{
+  "name": "@office/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A empresa: workflows Temporal, atividades, livro-caixa, provedores de modelo, sandbox, CI e finanças.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./worker": "./src/temporal/worker.ts",
+    "./workflows": "./src/temporal/workflows/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "eval": "tsx src/evals/run.ts"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-pgvector": "0.0.9",
+    "@office/contracts": "workspace:*",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.222.0",
+    "@opentelemetry/resources": "^2.11.0",
+    "@opentelemetry/sdk-trace-base": "^2.11.0",
+    "@temporalio/activity": "1.24.0",
+    "@temporalio/client": "1.24.0",
+    "@temporalio/common": "1.24.0",
+    "@temporalio/worker": "1.24.0",
+    "@temporalio/workflow": "1.24.0",
+    "ioredis": "^5.11.1",
+    "openai": "^7.28.0",
+    "pg": "^8.23.1",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

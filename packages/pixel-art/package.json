@@ -1,0 +1,23 @@
+{
+  "name": "@office/pixel-art",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Arte em pixel gerada por código: tileset, móveis, personagens e o mapa Tiled do escritório.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "preview": "tsx scripts/generate.ts --preview",
+    "typecheck": "tsc -p tsconfig.json",
+    "readme-art": "tsx scripts/readme-art.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/pngjs": "^6.0.5",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3"
+  }
+}

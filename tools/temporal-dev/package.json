@@ -1,0 +1,10 @@
+{
+  "name": "@office/temporal-dev",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Baixa (se preciso) e sobe o Temporal dev server com SQLite persistente em .data/.",
+  "scripts": {
+    "dev": "node index.mjs"
+  }
+}

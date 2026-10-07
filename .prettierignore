@@ -1,0 +1,10 @@
+node_modules
+.data
+.tools
+dist
+pnpm-lock.yaml
+apps/web/public/assets
+packages/pixel-art/preview
+evals/results
+*.md
+config/*.yaml

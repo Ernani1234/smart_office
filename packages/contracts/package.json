@@ -1,0 +1,23 @@
+{
+  "name": "@office/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Contratos compartilhados: schemas Zod (eventos, cargos, documentos), JSON Schema estrito e a projeção do escritório.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./logic": "./src/logic/index.ts",
+    "./projection": "./src/projection/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

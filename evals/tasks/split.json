@@ -1,0 +1,13 @@
+{
+  "id": "split",
+  "title": "Divisão de centavos",
+  "objective": "Criar src/split.js exportando splitCents(total, partes).",
+  "context": "Divide um valor inteiro em centavos em partes inteiras que somam o total e diferem no máximo 1 centavo, maiores primeiro.",
+  "acceptanceCriteria": [
+    "splitCents(100, 3) deep-equal [34, 33, 33]",
+    "A soma sempre fecha"
+  ],
+  "hiddenTests": {
+    "test/hidden-split.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { splitCents } from '../src/split.js';\n\ntest('oculto: divisões', () => {\n  assert.deepEqual(splitCents(100, 3), [34, 33, 33]);\n  assert.deepEqual(splitCents(5, 5), [1, 1, 1, 1, 1]);\n  assert.deepEqual(splitCents(7, 2), [4, 3]);\n});\n\ntest('oculto: soma fecha', () => {\n  const parts = splitCents(1999, 7);\n  assert.equal(parts.reduce((a, b) => a + b, 0), 1999);\n  assert.ok(Math.max(...parts) - Math.min(...parts) <= 1);\n});\n"
+  }
+}

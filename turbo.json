@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "agentGuidance": false,
+  "globalEnv": [
+    "LLM_PROVIDER",
+    "OPENAI_API_KEY",
+    "DATABASE_URL",
+    "REDIS_URL",
+    "TEMPORAL_ADDRESS"
+  ],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "typecheck": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    }
+  }
+}

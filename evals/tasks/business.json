@@ -1,0 +1,13 @@
+{
+  "id": "business",
+  "title": "Dias úteis entre datas",
+  "objective": "Criar src/business.js exportando businessDaysBetween(inicioISO, fimISO).",
+  "context": "Conta dias de segunda a sexta após a data inicial até a final (inclusive). Datas em YYYY-MM-DD, sem feriados.",
+  "acceptanceCriteria": [
+    "Sexta → segunda conta 1",
+    "Mesmo dia conta 0"
+  ],
+  "hiddenTests": {
+    "test/hidden-business.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { businessDaysBetween } from '../src/business.js';\n\ntest('oculto: fins de semana', () => {\n  assert.equal(businessDaysBetween('2026-10-02', '2026-10-05'), 1);\n  assert.equal(businessDaysBetween('2026-10-05', '2026-10-05'), 0);\n  assert.equal(businessDaysBetween('2026-10-05', '2026-10-16'), 9);\n});\n"
+  }
+}

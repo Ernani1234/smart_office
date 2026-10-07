@@ -1,0 +1,14 @@
+{
+  "id": "slugify",
+  "title": "Função slugify",
+  "objective": "Criar src/slugify.js exportando slugify(texto) para URLs amigáveis.",
+  "context": "Minúsculas, sem acentos, qualquer sequência não alfanumérica vira um hífen, sem hífens nas pontas.",
+  "acceptanceCriteria": [
+    "slugify('Olá Mundo!') === 'ola-mundo'",
+    "Sem hífens duplicados ou nas pontas",
+    "Testes próprios em test/"
+  ],
+  "hiddenTests": {
+    "test/hidden-slugify.test.js": "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { slugify } from '../src/slugify.js';\n\ntest('oculto: acentos e pontuação', () => {\n  assert.equal(slugify('Olá Mundo!'), 'ola-mundo');\n  assert.equal(slugify('Ação & Reação'), 'acao-reacao');\n});\n\ntest('oculto: pontas e repetições', () => {\n  assert.equal(slugify('  --A  B--  '), 'a-b');\n  assert.equal(slugify('já... já!!!'), 'ja-ja');\n});\n"
+  }
+}

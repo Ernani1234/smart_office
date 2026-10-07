@@ -1,0 +1,10 @@
+packages:
+  - apps/*
+  - packages/*
+  - tools/*
+
+onlyBuiltDependencies:
+  - "@swc/core"
+  - "@temporalio/core-bridge"
+  - esbuild
+  - protobufjs

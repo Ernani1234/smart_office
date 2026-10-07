@@ -1,0 +1,27 @@
+{
+  "name": "@office/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "API Fastify (REST + WebSocket) do escritório. No modo local também embute o worker Temporal.",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.3.0",
+    "@fastify/static": "^10.1.5",
+    "@fastify/websocket": "^11.3.3",
+    "@office/contracts": "workspace:*",
+    "@office/engine": "workspace:*",
+    "fastify": "^5.12.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3"
+  }
+}

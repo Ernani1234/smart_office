@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.turbo/
+.data/
+.tools/
+.env
+.env.local
+*.log
+coverage/
+packages/pixel-art/preview/
+apps/web/test-results/
+evals/results/
